@@ -60,8 +60,17 @@
 (global-visual-line-mode 1)
 
 ;; Sets up the django shell stolen from [[here][https://faridrener.com/2015/09/30/shell-plus-emacs.html]]
-(setq python-shell-interpreter-args "-i /home/bagool/Documents/Coursera/Django/demoproject/manage.py shell")
+;; (setq python-shell-interpreter-args "-i /home/bagool/Documents/Coursera/Django/demoproject/manage.py shell")
+;; now im doing it a different way cuz the other one was causing problems
+;; taken from https://dougie.io/emacs/django-shell/
+(defun django-shell ()
+  (interactive)
+  (let ((python-shell-interpreter "/home/bagool/Documents/Coursera/Django/demoproject/manage.py")
+        (python-shell-interpreter-args "shell"))
+    (run-python (python-shell-calculate-command) nil t)))
 
+;; so i don't get that weird warning from the django shell
+(setq python-shell-prompt-detect-failure-warning nil)
 
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
