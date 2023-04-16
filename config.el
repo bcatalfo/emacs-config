@@ -59,20 +59,28 @@
 ;; Want line wrapping
 (global-visual-line-mode 1)
 
+;; make vterm run fish
+(setq vterm-shell "/bin/fish")
 ;; Sets up the django shell stolen from [[here][https://faridrener.com/2015/09/30/shell-plus-emacs.html]]
 ;; (setq python-shell-interpreter-args "-i /home/bagool/Documents/Coursera/Django/demoproject/manage.py shell")
 ;; now im doing it a different way cuz the other one was causing problems
 ;; taken from https://dougie.io/emacs/django-shell/
-(defun django-shell ()
-  (interactive)
-  (let ((python-shell-interpreter "/home/bagool/Documents/Coursera/Django/demoproject/manage.py")
-        (python-shell-interpreter-args "shell"))
-    (run-python (python-shell-calculate-command) nil t)))
+;; (defun django-shell ()
+;;   (interactive)
+;;   (let ((python-shell-interpreter "/home/bagool/Documents/Coursera/Django/demoproject/manage.py")
+;;         (python-shell-interpreter-args "shell"))
+;;     (run-python (python-shell-calculate-command) nil t)))
 
 ;; so i don't get that weird warning from the django shell
 (setq python-shell-prompt-detect-failure-warning nil)
 
+;; lsp doing too many things (not sure if this works)
+;; (after! 'lsp-mode
+;;   (setq lsp-pyright-multi-root nil))
 
+;; lsp reading my virtual environment (bad!)
+;; (after! 'lsp-mode
+;;   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\env\\'"))
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
 ;;
@@ -96,6 +104,10 @@
 ;;   `require' or `use-package'.
 ;; - `map!' for binding new keys
 ;;
+(map!
+ :after evil
+ :map evil-window-map
+ "C-h" nil)
 ;; To get information about any of these functions/macros, move the cursor over
 ;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
 ;; This will open documentation for it, including demos of how they are used.
